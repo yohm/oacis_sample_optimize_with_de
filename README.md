@@ -1,6 +1,6 @@
 # Samples of parameter optimization
 
-This is a sample of optimizing parameters using OACIS watcher.
+This is a sample of parameter optimizations using OACIS watcher.
 This program iteratively search for parameters which minimizes the results of the simulations.
 For the optimization, we adopted a [differential evolutiion algorithm](https://en.wikipedia.org/wiki/Differential_evolution).
 
@@ -59,7 +59,7 @@ Or, if you prefer Python script, run
 ${OACIS_ROOT}/bin/oacis_python python/optimize_with_oacis.py 10 20 0.8 0.9 1234
 ```
 
-You can suspend the code by typing 'Ctrl-C'. Run the above command again to continue. The simulation runs already executed are stored in OACIS, and you can skip the simulation runs.
+You can suspend the code by typing 'Ctrl-C'. Run the above command again to continue. The simulation runs already executed are stored in OACIS, and you can skip the finished runs.
 
 A scatter plot of the sampled parameters would look like the following. Color scale indicates the simulation outputs.
 As you see in the figure, region close to the optimal point is more intensively sampled.
