@@ -15,7 +15,7 @@ opt_param = {num_iteration:num_iteration, n:n, f:f, cr:cr, seed:seed}
 logger = Logger.new($stderr)
 
 
-def optimize_p1p2( p3, opt_param, w )
+def optimize_p1p2( p3, opt_param )
   sim = Simulator.find_by_name("de_optimize_test2")
   host = Host.find_by_name("localhost")
   domains = [
@@ -30,7 +30,7 @@ def optimize_p1p2( p3, opt_param, w )
       $stderr.puts "Created a new PS: #{ps.v}"
       ps
     end
-    parameter_sets = w.await_all_ps( parameter_sets )
+    parameter_sets = OacisWatcher.await_all_ps( parameter_sets )
     parameter_sets.map {|ps| ps.runs.first.result["f"] }
   }
 
@@ -46,8 +46,8 @@ end
 OacisWatcher::start( logger: logger ) {|w|
   p3_list = [0.0,1.0,2.0]
   p3_list.each do |p3|
-    w.async {
-      optimize_p1p2( p3, opt_param, w )
+    OacisWatcher.async {
+      optimize_p1p2( p3, opt_param )
     }
   end
 }
