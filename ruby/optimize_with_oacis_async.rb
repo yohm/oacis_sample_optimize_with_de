@@ -28,14 +28,15 @@ map_agents = lambda {|agents|
     logger.info "Created a new PS: #{ps.v}"
     ps
   end
-  OacisWatcher::start( logger: logger ) {|w| w.await_all_ps( parameter_sets ) }
+  OacisWatcher.await_all_ps( parameter_sets )
   parameter_sets.map {|ps| ps.runs.first.result["f"] }
 }
 
-opt = DE_Optimizer.new(map_agents, domains, n: n, f: f, cr: cr, rand_seed: 1234)
-
-num_iteration.times do |t|
-  opt.proceed
-  puts "#{opt.t} #{opt.best_point} #{opt.best_f} #{opt.average_f}"
-end
+OacisWatcher.start( logger: logger ) {|w|
+  opt = DE_Optimizer.new(map_agents, domains, n: n, f: f, cr: cr, rand_seed: 1234)
+  num_iteration.times do |t|
+    opt.proceed
+    puts "#{opt.t} #{opt.best_point} #{opt.best_f} #{opt.average_f}"
+  end
+}
 

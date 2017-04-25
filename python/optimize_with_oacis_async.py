@@ -29,7 +29,7 @@ def map_agents(agents):
         print("Created a new PS: %s" % str(ps.id()) )
         parameter_sets.append(ps)
     w = oacis.OacisWatcher()
-    w.async( lambda: w.await_all_ps(parameter_sets) )# Wait until all parameter_sets complete
+    w.async( lambda: oacis.OacisWatcher.await_all_ps(parameter_sets) )# Wait until all parameter_sets complete
     print("loop is called")
     w.loop()
     results = [ps.runs().first().result()['f'] for ps in parameter_sets]

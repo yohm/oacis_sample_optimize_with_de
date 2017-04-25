@@ -15,7 +15,7 @@ opt_param = {"num_iter": num_iter, "n": n, "f": f, "cr": cr, "seed": seed}
 #print("given parameters : num_iter %d, n: %d, f: %f, cr: %f, seed: %d" % (num_iter,n,f,cr,seed))
 print("given parameters : %s" % repr(opt_param) )
 
-def optimize_p1p2( p3, opt_param, w ):
+def optimize_p1p2( p3, opt_param ):
     sim = oacis.Simulator.find_by_name("de_optimize_test2")
     host = oacis.Host.find_by_name("localhost")
     domains = [
@@ -30,7 +30,7 @@ def optimize_p1p2( p3, opt_param, w ):
             runs = ps.find_or_create_runs_upto(1, submitted_to=host)
             print("Created a new PS: %s" % str(ps.id()) )
             parameter_sets.append(ps)
-        w.await_all_ps(parameter_sets) # Wait until all parameter_sets complete
+        oacis.OacisWatcher.await_all_ps(parameter_sets) # Wait until all parameter_sets complete
         results = [ps.runs().first().result()['f'] for ps in parameter_sets]
         return results
 
@@ -45,6 +45,6 @@ def optimize_p1p2( p3, opt_param, w ):
 w = oacis.OacisWatcher()
 p3_list = [0.0,1.0,2.0]
 for p3 in p3_list:
-    w.async( lambda: optimize_p1p2(p3,opt_param,w) )
+    w.async( lambda: optimize_p1p2(p3,opt_param) )
 w.loop()
 

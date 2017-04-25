@@ -46,7 +46,7 @@ end
 OacisWatcher::start( logger: logger ) {|w|
   p3_list = [0.0,1.0,2.0]
   p3_list.each do |p3|
-    OacisWatcher.async {
+    w.async {
       optimize_p1p2( p3, opt_param )
     }
   end
