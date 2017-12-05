@@ -82,6 +82,10 @@ class DE_Optimizer():
         for d in range(dim):
             if d == r or self.random.random() < self.cr:
                 new_pos[d] = self.population[a][d] + self.f * (self.population[b][d] - self.population[c][d])
+                if new_pos[d] > self.domains[d].max:
+                    new_pos[d] = self.domains[d].max;
+                if new_pos[d] < self.domains[d].min:
+                    new_pos[d] = self.domains[d].min;
         return new_pos
 
 if __name__ == "__main__":
